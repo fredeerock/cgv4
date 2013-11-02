@@ -1,6 +1,3 @@
-// TO DO
-// - Make levels!
-
 String[] cList;
 int[] companyValues;
 String[] companyNames;
@@ -202,4 +199,3 @@ class Circle {
     text(cName, x, y);
   }
 }
-
