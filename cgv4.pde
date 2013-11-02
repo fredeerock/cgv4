@@ -1,3 +1,6 @@
+// TO DO
+// - Make levels!
+
 String[] cList;
 int[] companyValues;
 String[] companyNames;
@@ -12,17 +15,19 @@ float mSmallest = 0;
 PFont f;
 int fs = 12;
 boolean rs = false;
+int difficulty = 0.25;
+boolean showName = false;
+boolean showNameR = false;
+String Name = "";
 
 void setup() {
-  size(screenWidth, screenHeight, P2D);
-  //  size(displayWidth, displayHeight);
-  //  frameRate(24);
+  size(screenWidth, screenHeight);
+  textMode(SCREEN);
   textAlign(CENTER);
   noStroke();
   noCursor();
   cList = loadStrings("list.php");
   count = cList.length;
-  textMode(SCREEN);
   f = createFont("Helvetica", fs);
   textFont(f);
   circles = new Circle[count/2];
@@ -74,37 +79,19 @@ void setup() {
   //  println("mB "+ mBiggest);
 }
 
-// float[] fra = new float[120];
-// int frn = 0;
-// float fravg;
-
 void draw() {
 
   background(25);
   myCircle.x = mouseX;
   myCircle.y = mouseY;
 
-  // fra[frn] = frameRate;
-  // frn++;
-
-  // float frs = 0;
-  // for (int i = 0; i<fra.length; i++){
-  // 	frs = fra[i] + frs;
-  // 	fravg = frs/i;
-  // }
-
-  //  text(fravg, width-20, height-20, 0);
-
   if (myCircle.r < 25) {
     myCircle.r = 25;
   }
 
-
-
   myCircle.render();
 
   for (int i = 0; i < companySizes.length; i++) {
-
     float s = (map(companySizes[i], mSmallest, mBiggest, mBiggest, mSmallest))/50;
 
     if (s < 1) {
@@ -127,10 +114,16 @@ void draw() {
 
       if (myCircle.r > companySizes[i]) {
         myCircle.r = myCircle.r + companySizes[i]/5;
+        showName = true;
+        showNameR = false;
+        Name = companyNames[i];
       } 
 
       if (myCircle.r < companySizes[i]) {
         myCircle.r = myCircle.r - companySizes[i]/5;
+        showNameR = true;
+        showName = false;
+        Name = companyNames[i];
       }
     }
 
@@ -151,18 +144,36 @@ void draw() {
     }
   }
 
-  if (myCircle.r > width*10 && mousePressed) {
+  fill(0);
+  rect(0, 0, width, myCircle.r*1.5);
+
+  if (showName) {
+    fill(0, 255, 0);
+    textFont(f, 38);
+    text(Name, width/1.1, height-(height/1.04));
+  }
+
+  if (showNameR) {
+    fill(255, 0, 0);
+    textFont(f, 38);
+    text(Name, width/1.1, height-(height/1.04));
+  }
+
+
+  if (myCircle.r > width*150 || mousePressed) {
     rs = false;
     myCircle.r = 25;
   }
 
-  if (myCircle.r > width*10) {
+  if (myCircle.r > width*6) {
     rs = true;
   }
 
   if (rs) {
-    fill(255/5);
-    textFont(f, 14);
+    fill(0);
+    rect(0, 0, width, height);
+    fill(255);
+    textFont(f, 24);
     text("Tap to play again.", width/2, height/2);
   }
 }
