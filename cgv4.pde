@@ -11,18 +11,18 @@ float mBiggest = 0;
 float mSmallest = 0;
 PFont f;
 int fs = 12;
-
-
+boolean rs = false;
 
 void setup() {
-  size(screenWidth, screenHeight);
+  size(screenWidth, screenHeight, P2D);
   //  size(displayWidth, displayHeight);
-//  frameRate(24);
+  //  frameRate(24);
   textAlign(CENTER);
   noStroke();
   noCursor();
   cList = loadStrings("list.php");
   count = cList.length;
+  textMode(SCREEN);
   f = createFont("Helvetica", fs);
   textFont(f);
   circles = new Circle[count/2];
@@ -64,39 +64,57 @@ void setup() {
   mBiggest = max(companySizes);
   mSmallest = min(companySizes);
 
-//  println(width);
-//  println(height);
-//  println(companyValues);
-//  println(smallest);
-//  println(biggest);
-//  println(companySizes);
-//  println(mSmallest);
-//  println("mB "+ mBiggest);
+  //  println(width);
+  //  println(height);
+  //  println(companyValues);
+  //  println(smallest);
+  //  println(biggest);
+  //  println(companySizes);
+  //  println(mSmallest);
+  //  println("mB "+ mBiggest);
 }
 
+// float[] fra = new float[120];
+// int frn = 0;
+// float fravg;
+
 void draw() {
+
   background(25);
   myCircle.x = mouseX;
   myCircle.y = mouseY;
 
+  // fra[frn] = frameRate;
+  // frn++;
+
+  // float frs = 0;
+  // for (int i = 0; i<fra.length; i++){
+  // 	frs = fra[i] + frs;
+  // 	fravg = frs/i;
+  // }
+
+  //  text(fravg, width-20, height-20, 0);
+
   if (myCircle.r < 25) {
     myCircle.r = 25;
   }
+
+
 
   myCircle.render();
 
   for (int i = 0; i < companySizes.length; i++) {
 
     float s = (map(companySizes[i], mSmallest, mBiggest, mBiggest, mSmallest))/50;
-    
+
     if (s < 1) {
       s = 1;
     } 
-    
+
     if (s > 20) {
       s = 20;
     }
-    
+
     circles[i].y = circles[i].y + s;
 
     if (circles[i].y/2>height) {
@@ -114,7 +132,6 @@ void draw() {
       if (myCircle.r < companySizes[i]) {
         myCircle.r = myCircle.r - companySizes[i]/5;
       }
-      
     }
 
     if (myCircle.r > companySizes[i]) {
@@ -127,7 +144,27 @@ void draw() {
 
     circles[i].render();
   }
-  
+
+  if (keyPressed) {
+    if (key == 'p') {
+      myCircle.r = 500;
+    }
+  }
+
+  if (myCircle.r > width*10 && mousePressed) {
+    rs = false;
+    myCircle.r = 25;
+  }
+
+  if (myCircle.r > width*10) {
+    rs = true;
+  }
+
+  if (rs) {
+    fill(255/5);
+    textFont(f, 14);
+    text("Tap to play again.", width/2, height/2);
+  }
 }
 
 class Circle {
