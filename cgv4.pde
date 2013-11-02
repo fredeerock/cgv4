@@ -141,9 +141,9 @@ void draw() {
   }
 
   fill(255);
-  rect(0, 0, width, (myCircle.r*1.75)+4);
+  rect(0, 0, width, (myCircle.r*1.8)+4);
   fill(0);
-  rect(0, 0, width, myCircle.r*1.75);
+  rect(0, 0, width, myCircle.r*1.8);
 
   if (showName) {
     fill(0, 255, 0);
