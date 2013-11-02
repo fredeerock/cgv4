@@ -1,4 +1,3 @@
-
 String[] cList;
 int[] companyValues;
 String[] companyNames;
@@ -13,7 +12,6 @@ float mSmallest = 0;
 PFont f;
 int fs = 12;
 boolean rs = false;
-int difficulty = 0.25;
 boolean showName = false;
 boolean showNameR = false;
 String Name = "";
@@ -26,7 +24,7 @@ void setup() {
   noCursor();
   cList = loadStrings("list.php");
   count = cList.length;
-  f = createFont("Helvetica", fs);
+  f = createFont("Flamenco", fs);
   textFont(f);
   circles = new Circle[count/2];
   companyValues = new int[count/2];
@@ -142,8 +140,10 @@ void draw() {
     }
   }
 
+  fill(255);
+  rect(0, 0, width, (myCircle.r*1.75)+4);
   fill(0);
-  rect(0, 0, width, myCircle.r*1.5);
+  rect(0, 0, width, myCircle.r*1.75);
 
   if (showName) {
     fill(0, 255, 0);
@@ -158,7 +158,7 @@ void draw() {
   }
 
 
-  if (myCircle.r > width*150 || mousePressed) {
+  if (myCircle.r > width*6 && mousePressed) {
     rs = false;
     myCircle.r = 25;
   }
