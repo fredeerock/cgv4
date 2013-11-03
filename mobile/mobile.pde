@@ -15,10 +15,12 @@ boolean rs = false;
 boolean showName = false;
 boolean showNameR = false;
 String Name = "";
+PImage bill;
 
 void setup() {
   size(screenWidth, screenHeight);
-  textMode(SCREEN);
+  bill = loadImage("bill.png");
+  //  textMode(SCREEN);
   textAlign(CENTER);
   noStroke();
   noCursor();
@@ -140,21 +142,23 @@ void draw() {
     }
   }
 
+  float billYPos = bill.height*(-1.0)*(width/bill.width)-(25*1.8);
   fill(255);
-  rect(0, 0, width, (myCircle.r*1.75)+4);
+  rect(0, 0, width, (myCircle.r*1.8)+4);
   fill(0);
-  rect(0, 0, width, myCircle.r*1.75);
-
+  rect(0, 0, width, myCircle.r*1.8);
+  image(bill, 0, billYPos+(myCircle.r*1.8), width, (width/bill.width)*bill.height);
+  
   if (showName) {
     fill(0, 255, 0);
     textFont(f, 38);
-    text(Name, width/1.1, height-(height/1.04));
+    text("Bought "+Name, width/1.1, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (showNameR) {
     fill(255, 0, 0);
     textFont(f, 38);
-    text(Name, width/1.1, height-(height/1.04));
+    text("Sold "+Name, width/1.1, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
 
@@ -195,8 +199,9 @@ class Circle {
   void render() {
     fill(c);
     ellipse(x, y, r*2, r*2);
-    fill(255, 128);
+//    fill(255, 128);
 //    textSize(map(r, smallest, biggest, 4, 170));
 //    text(cName, x, y);
   }
 }
+

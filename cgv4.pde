@@ -15,10 +15,15 @@ boolean rs = false;
 boolean showName = false;
 boolean showNameR = false;
 String Name = "";
+PImage bill;
+float m;
+float score;
 
 void setup() {
   size(screenWidth, screenHeight);
-  textMode(SCREEN);
+
+  bill = loadImage("bill.png");
+  //  textMode(SCREEN);
   textAlign(CENTER);
   noStroke();
   noCursor();
@@ -136,43 +141,62 @@ void draw() {
 
   if (keyPressed) {
     if (key == 'p') {
-      myCircle.r = 500;
+      myCircle.r = myCircle.r + 10;
     }
   }
 
+  float billYPos = bill.height*(-1.0)*(width/bill.width)-(25*1.8);
   fill(255);
   rect(0, 0, width, (myCircle.r*1.8)+4);
   fill(0);
   rect(0, 0, width, myCircle.r*1.8);
+  image(bill, 0, billYPos+(myCircle.r*1.8), width, (width/bill.width)*bill.height);
+
+  m = millis();
+  fill(255);
+  textFont(f, 38);
+  text("Time Left: "+ (30-round(m/1000)), 300, (height-(height/1.04))+(myCircle.r*1.8)-42);
+  text("Cash: "+round(myCircle.r), 75, (height-(height/1.04))+(myCircle.r*1.8)-42);
+
+  //  if(m/1000/60 > 5) {
+  //   link("http://popsnorkle.com/conglomeration");
+  //  } 
 
   if (showName) {
     fill(0, 255, 0);
     textFont(f, 38);
-    text(Name, width/1.1, height-(height/1.04));
+    text("BOUGHT: "+Name, width/1.2, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (showNameR) {
     fill(255, 0, 0);
     textFont(f, 38);
-    text(Name, width/1.1, height-(height/1.04));
+    text("BOUGHT BY : "+Name, width/1.2, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
 
   if (myCircle.r > width*6 && mousePressed) {
-    rs = false;
-    myCircle.r = 25;
+    link("http://popsnorkle.com/cgv4");
   }
 
-  if (myCircle.r > width*6) {
+  if (myCircle.r > width*6 && myCircle.r < width*6.1) {
+    rs = true;
+    score = millis();
+  }
+
+  if ((30-round(m/1000)) <= 0) {
     rs = true;
   }
+
+
 
   if (rs) {
     fill(0);
     rect(0, 0, width, height);
     fill(255);
     textFont(f, 24);
-    text("Tap to play again.", width/2, height/2);
+    text("Time: "+(score/1000), width/2, (height/2)+100);
+    text("Click to start a new game.", width/2, height/2);
   }
 }
 
@@ -200,3 +224,4 @@ class Circle {
     text(cName, x, y);
   }
 }
+
