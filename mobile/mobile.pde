@@ -150,21 +150,21 @@ void draw() {
   m = millis();
 
   fill(255);
-  textFont(f, 38);
+  textFont(f, map(width, 480, 1680, 20, 40));
   textAlign(LEFT);
   text("Cash: "+round(myCircle.r)+"    Time: "+ (round(m/100)/10), 0, (height-(height/1.04))+(myCircle.r*1.8)-42);
 //  text("Time: "+ (round(m/100)/10), (width/2)-200, (height-(height/1.04))+(myCircle.r*1.8)-42);
 
   if (showName) {
     fill(0, 255, 0);
-    textFont(f, 38);
+    textFont(f, map(width, 450, 1700, 20, 40));
     textAlign(RIGHT);
     text("BOUGHT: "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (showNameR) {
     fill(255, 0, 0);
-    textFont(f, 38);
+    textFont(f, map(width, 450, 1700, 20, 40));
     textAlign(RIGHT);
     text("BOUGHT BY : "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
@@ -187,9 +187,9 @@ void draw() {
     rect(0, 0, width, height);
     image(bill2, 0, 0, width, (width/bill2.width)*bill2.height);
     fill(255);
-    textFont(f, 40);
+    textFont(f, map(width, 450, 1700, 20, 40));
     if (score/1000 < 29) {
-      text("Previous Time:  "+(score/1000)+" seconds", width/2, height-100);
+      text("Last Time:  "+(score/1000)+" seconds", width/2, height-100);
     }
 
     if (score/1000 > 29) {
@@ -199,7 +199,7 @@ void draw() {
     text("Click to start a new game.", width/2, height-150);
 
     if (mousePressed) {
-      link("http://localhost/cgv4");
+      link("http://popsnorkle.com/cgv4");
     }
   }
 }
