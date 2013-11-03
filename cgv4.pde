@@ -21,14 +21,14 @@ PImage bill;
 PImage bill2;
 float m;
 float score;
+int amtOfTime = 60;
 
 void setup() {
   size(screenWidth, screenHeight);
 
   bill = loadImage("bill.png");
   bill2 = loadImage("bill2.png");
-  //  textMode(SCREEN);
-  textAlign(CENTER);
+
   noStroke();
   noCursor();
   cList = loadStrings("list.php");
@@ -73,15 +73,6 @@ void setup() {
 
   mBiggest = max(companySizes);
   mSmallest = min(companySizes);
-
-  //  println(width);
-  //  println(height);
-  //  println(companyValues);
-  //  println(smallest);
-  //  println(biggest);
-  //  println(companySizes);
-  //  println(mSmallest);
-  //  println("mB "+ mBiggest);
 }
 
 void draw() {
@@ -157,21 +148,25 @@ void draw() {
   image(bill, 0, billYPos+(myCircle.r*1.8), width, (width/bill.width)*bill.height);
 
   m = millis();
+
   fill(255);
   textFont(f, 38);
-  text("Time Left: "+ (30-round(m/1000)), 300, (height-(height/1.04))+(myCircle.r*1.8)-42);
-  text("Cash: "+round(myCircle.r), 75, (height-(height/1.04))+(myCircle.r*1.8)-42);
+  textAlign(LEFT);
+  text("Cash: "+round(myCircle.r)+"    Time: "+ (round(m/100)/10), 0, (height-(height/1.04))+(myCircle.r*1.8)-42);
+//  text("Time: "+ (round(m/100)/10), (width/2)-200, (height-(height/1.04))+(myCircle.r*1.8)-42);
 
   if (showName) {
     fill(0, 255, 0);
     textFont(f, 38);
-    text("BOUGHT: "+Name, width/1.2, (height-(height/1.04))+(myCircle.r*1.8)-42);
+    textAlign(RIGHT);
+    text("BOUGHT: "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (showNameR) {
     fill(255, 0, 0);
     textFont(f, 38);
-    text("BOUGHT BY : "+Name, width/1.2, (height-(height/1.04))+(myCircle.r*1.8)-42);
+    textAlign(RIGHT);
+    text("BOUGHT BY : "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (myCircle.r > width*6) {
@@ -182,14 +177,14 @@ void draw() {
     score = millis();
   }
 
-  if ((30-round(m/1000)) <= 0) {
+  if ((amtOfTime-round(m/1000)) <= 0) {
     rs = true;
   }
 
   if (rs) {
-
+    textAlign(CENTER);
     fill(0);
-    rect(0, height/2, width, height/2);
+    rect(0, 0, width, height);
     image(bill2, 0, 0, width, (width/bill2.width)*bill2.height);
     fill(255);
     textFont(f, 40);
@@ -200,7 +195,7 @@ void draw() {
     if (score/1000 > 29) {
       text("Times Up!", width/2, height-100);
     }
-    
+
     text("Click to start a new game.", width/2, height-150);
 
     if (mousePressed) {
@@ -230,6 +225,7 @@ class Circle {
     ellipse(x, y, r*2, r*2);
     fill(255, 128);
     textSize(map(r, smallest, biggest, 4, 170));
+    textAlign(CENTER);
     text(cName, x, y);
   }
 }

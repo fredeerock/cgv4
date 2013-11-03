@@ -1,3 +1,5 @@
+//rsync -avz --progress /Applications/AMPPS/www/cgv4 popsn0@popsnorkle.com:public_html
+
 String[] cList;
 int[] companyValues;
 String[] companyNames;
@@ -16,12 +18,17 @@ boolean showName = false;
 boolean showNameR = false;
 String Name = "";
 PImage bill;
+PImage bill2;
+float m;
+float score;
+int amtOfTime = 60;
 
 void setup() {
   size(screenWidth, screenHeight);
+
   bill = loadImage("bill.png");
-  //  textMode(SCREEN);
-  textAlign(CENTER);
+  bill2 = loadImage("bill2.png");
+
   noStroke();
   noCursor();
   cList = loadStrings("list.php");
@@ -66,15 +73,6 @@ void setup() {
 
   mBiggest = max(companySizes);
   mSmallest = min(companySizes);
-
-  //  println(width);
-  //  println(height);
-  //  println(companyValues);
-  //  println(smallest);
-  //  println(biggest);
-  //  println(companySizes);
-  //  println(mSmallest);
-  //  println("mB "+ mBiggest);
 }
 
 void draw() {
@@ -138,7 +136,7 @@ void draw() {
 
   if (keyPressed) {
     if (key == 'p') {
-      myCircle.r = 500;
+      myCircle.r = myCircle.r + 10;
     }
   }
 
@@ -148,35 +146,61 @@ void draw() {
   fill(0);
   rect(0, 0, width, myCircle.r*1.8);
   image(bill, 0, billYPos+(myCircle.r*1.8), width, (width/bill.width)*bill.height);
-  
+
+  m = millis();
+
+  fill(255);
+  textFont(f, 38);
+  textAlign(LEFT);
+  text("Cash: "+round(myCircle.r)+"    Time: "+ (round(m/100)/10), 0, (height-(height/1.04))+(myCircle.r*1.8)-42);
+//  text("Time: "+ (round(m/100)/10), (width/2)-200, (height-(height/1.04))+(myCircle.r*1.8)-42);
+
   if (showName) {
     fill(0, 255, 0);
     textFont(f, 38);
-    text("Bought "+Name, width/1.1, (height-(height/1.04))+(myCircle.r*1.8)-42);
+    textAlign(RIGHT);
+    text("BOUGHT: "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (showNameR) {
     fill(255, 0, 0);
     textFont(f, 38);
-    text("Sold "+Name, width/1.1, (height-(height/1.04))+(myCircle.r*1.8)-42);
-  }
-
-
-  if (myCircle.r > width*6 && mousePressed) {
-    rs = false;
-    myCircle.r = 25;
+    textAlign(RIGHT);
+    text("BOUGHT BY : "+Name, width, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
   if (myCircle.r > width*6) {
     rs = true;
   }
 
+  if (myCircle.r < width*6) {
+    score = millis();
+  }
+
+  if ((amtOfTime-round(m/1000)) <= 0) {
+    rs = true;
+  }
+
   if (rs) {
+    textAlign(CENTER);
     fill(0);
     rect(0, 0, width, height);
+    image(bill2, 0, 0, width, (width/bill2.width)*bill2.height);
     fill(255);
-    textFont(f, 24);
-    text("Tap to play again.", width/2, height/2);
+    textFont(f, 40);
+    if (score/1000 < 29) {
+      text("Previous Time:  "+(score/1000)+" seconds", width/2, height-100);
+    }
+
+    if (score/1000 > 29) {
+      text("Times Up!", width/2, height-100);
+    }
+
+    text("Click to start a new game.", width/2, height-150);
+
+    if (mousePressed) {
+      link("http://localhost/cgv4");
+    }
   }
 }
 
@@ -201,6 +225,7 @@ class Circle {
     ellipse(x, y, r*2, r*2);
 //    fill(255, 128);
 //    textSize(map(r, smallest, biggest, 4, 170));
+//    textAlign(CENTER);
 //    text(cName, x, y);
   }
 }
