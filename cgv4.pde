@@ -1,3 +1,5 @@
+//rsync -avz --progress /Applications/AMPPS/www/cgv4 popsn0@popsnorkle.com:public_html
+
 String[] cList;
 int[] companyValues;
 String[] companyNames;
@@ -16,6 +18,7 @@ boolean showName = false;
 boolean showNameR = false;
 String Name = "";
 PImage bill;
+PImage bill2;
 float m;
 float score;
 
@@ -23,6 +26,7 @@ void setup() {
   size(screenWidth, screenHeight);
 
   bill = loadImage("bill.png");
+  bill2 = loadImage("bill2.png");
   //  textMode(SCREEN);
   textAlign(CENTER);
   noStroke();
@@ -158,10 +162,6 @@ void draw() {
   text("Time Left: "+ (30-round(m/1000)), 300, (height-(height/1.04))+(myCircle.r*1.8)-42);
   text("Cash: "+round(myCircle.r), 75, (height-(height/1.04))+(myCircle.r*1.8)-42);
 
-  //  if(m/1000/60 > 5) {
-  //   link("http://popsnorkle.com/conglomeration");
-  //  } 
-
   if (showName) {
     fill(0, 255, 0);
     textFont(f, 38);
@@ -174,13 +174,11 @@ void draw() {
     text("BOUGHT BY : "+Name, width/1.2, (height-(height/1.04))+(myCircle.r*1.8)-42);
   }
 
-
-  if (myCircle.r > width*6 && mousePressed) {
-    link("http://popsnorkle.com/cgv4");
+  if (myCircle.r > width*6) {
+    rs = true;
   }
 
-  if (myCircle.r > width*6 && myCircle.r < width*6.1) {
-    rs = true;
+  if (myCircle.r < width*6) {
     score = millis();
   }
 
@@ -188,15 +186,26 @@ void draw() {
     rs = true;
   }
 
-
-
   if (rs) {
+
     fill(0);
-    rect(0, 0, width, height);
+    rect(0, height/2, width, height/2);
+    image(bill2, 0, 0, width, (width/bill2.width)*bill2.height);
     fill(255);
-    textFont(f, 24);
-    text("Time: "+(score/1000), width/2, (height/2)+100);
-    text("Click to start a new game.", width/2, height/2);
+    textFont(f, 40);
+    if (score/1000 < 29) {
+      text("Previous Time:  "+(score/1000)+" seconds", width/2, height-100);
+    }
+
+    if (score/1000 > 29) {
+      text("Times Up!", width/2, height-100);
+    }
+    
+    text("Click to start a new game.", width/2, height-150);
+
+    if (mousePressed) {
+      link("http://localhost/cgv4");
+    }
   }
 }
 
