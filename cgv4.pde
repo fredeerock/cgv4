@@ -37,13 +37,13 @@ void setup() {
   textFont(f);
   circles = new Circle[count/2];
   companyValues = new int[count/2];
-  companyNames = new String[count/2]; 
-  companySizes = new float[count/2]; 
+  companyNames = new String[count/2];
+  companySizes = new float[count/2];
 
   int vi = 0;
   int vn = 0;
 
-  for (int i = 0; i < cList.length; i++) {    
+  for (int i = 0; i < cList.length; i++) {
 
     if (i%2==1) {
       companyValues[vi++] = int(cList[i]);
@@ -64,7 +64,7 @@ void setup() {
 
     if (myCircle.r > companySizes[i]) {
       circles[i].c = color(0, 255, 0, 128);
-    } 
+    }
 
     if (myCircle.r < companySizes[i]) {
       circles[i].c = color(255, 0, 0, 128);
@@ -92,7 +92,7 @@ void draw() {
 
     if (s < 1) {
       s = 1;
-    } 
+    }
 
     if (s > 20) {
       s = 20;
@@ -113,7 +113,7 @@ void draw() {
         showName = true;
         showNameR = false;
         Name = companyNames[i];
-      } 
+      }
 
       if (myCircle.r < companySizes[i]) {
         myCircle.r = myCircle.r - companySizes[i]/5;
@@ -125,7 +125,7 @@ void draw() {
 
     if (myCircle.r > companySizes[i]) {
       circles[i].c = color(0, 255, 0, 128);
-    } 
+    }
 
     if (myCircle.r < companySizes[i]) {
       circles[i].c = color(255, 0, 0, 128);
@@ -199,7 +199,7 @@ void draw() {
     text("Click to start a new game.", width/2, height-150);
 
     if (mousePressed) {
-      link("http://popsnorkle.com/cgv4");
+      link("https://www.cct.lsu.edu/~dostrenko/works/cgv4/");
     }
   }
 }
@@ -229,4 +229,3 @@ class Circle {
     text(cName, x, y);
   }
 }
-
